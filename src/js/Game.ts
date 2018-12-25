@@ -8,6 +8,7 @@ export default class Game {
   private height: number = 500
   private player: Player
   private asteroids: Asteroid[] = []
+  private timerId: number
 
   constructor() {
     this.canvas = <HTMLCanvasElement>document.getElementById('canvas')
@@ -15,13 +16,10 @@ export default class Game {
     this.canvas.width = this.width
     this.canvas.height = this.height
     this.player = new Player()
-    this.asteroids = [
-      new Asteroid(50),
-      new Asteroid(150),
-      new Asteroid(250),
-      new Asteroid(350),
-      new Asteroid(450)
-    ]
+    this.timerId = setInterval(
+      () => this.addAsteroids([0, 1, 2, 3, 4].map(num => this.generateAsteroidXCoord())),
+      1000
+    )
 
     document.addEventListener('keydown', this.keyDownHandler.bind(this), false)
     document.addEventListener('keyup', this.keyUpHandler.bind(this), false)
@@ -41,8 +39,16 @@ export default class Game {
     this.asteroids.forEach(asteroid => asteroid.draw(this.ctx))
   }
 
+  private addAsteroids(xCoords: number[]): void {
+    xCoords.forEach(xCoord => this.addAsteroid(xCoord))
+  }
+
   private addAsteroid(xCoord: number): void {
     this.asteroids.push(new Asteroid(xCoord))
+  }
+
+  private generateAsteroidXCoord(): number {
+    return Math.floor(Math.random() * 490) + 1
   }
 
   private keyDownHandler(e: KeyboardEvent): void {
@@ -55,11 +61,11 @@ export default class Game {
   }
 
   private keyUpHandler(e: KeyboardEvent): void {
-	if (e.keyCode === 39 && this.player.isMovingRight) {
-	  this.player.stop()
-	}
-	if (e.keyCode === 37 && this.player.isMovingLeft) {
-	  this.player.stop()
-	}
-      }
+    if (e.keyCode === 39 && this.player.isMovingRight) {
+      this.player.stop()
+    }
+    if (e.keyCode === 37 && this.player.isMovingLeft) {
+      this.player.stop()
+    }
+  }
 }

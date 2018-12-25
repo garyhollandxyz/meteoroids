@@ -1,4 +1,5 @@
 import Coords from './Coords'
+import Asteroid from './Asteroid'
 
 export default class Player {
   public isMovingLeft: boolean = false
@@ -50,11 +51,18 @@ export default class Player {
     this.isMovingRight = false
   }
 
+  private hasCrashed(asteroids: Asteroid[]) {
+    if (asteroids.some(asteroid => {
+      const asteroidCoords = asteroid.getFullCoords()
+      
+    }))
+  }
+
   private update(): void {
     console.log(this.coords[2])
     if (this.isMovingLeft) {
       const newCoords = this.coords.map(coord => ({ ...coord, x: coord.x - 3 }))
-      this.coords = this.coords[2].x <= 0 ? Player.rightMostCoords : newCoords
+      this.coords = newCoords[2].x <= 0 ? Player.rightMostCoords : newCoords
     }
 
     if (this.isMovingRight) {
