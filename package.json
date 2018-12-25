@@ -1,7 +1,8 @@
 {
-  "name": "game",
+  "name": "meteoroids",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/bundle.js",
+  "author": "Gary Holland",
   "license": "MIT",
   "scripts": {
     "dev": "webpack-dev-server --hot --open --mode=development",
